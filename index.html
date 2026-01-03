@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiao Hu - AI/ML Researcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e14;
+            --bg-secondary: #131922;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-green: #10b981;
+            --text-primary: #e8edf3;
+            --text-secondary: #8b98a8;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #00d4ff 0%, #0066ff 100%);
+            --gradient-3: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: -1;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            background: var(--accent-cyan);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            background: var(--accent-purple);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(100px, -100px); }
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 14, 20, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 100;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-cyan);
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--text-primary);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50px;
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 700px;
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeIn 1s ease-out 1.1s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-2);
+            color: white;
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 4rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--gradient-2);
+        }
+
+        /* Education Timeline */
+        .education-timeline {
+            margin-top: 2rem;
+        }
+
+        .education-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .education-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .education-year {
+            font-weight: 700;
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            padding-top: 0.3rem;
+        }
+
+        .education-content h3 {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .education-school {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .education-location {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .education-detail {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Research Cards */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .research-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-2);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .research-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .research-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .research-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .research-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .research-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .research-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .research-link {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .research-link:hover {
+            gap: 1rem;
+        }
+
+        /* Skills */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .skill-category h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin: 0.3rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Publications */
+        .publication {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-green);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .publication:hover {
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateX(8px);
+        }
+
+        .publication-title {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .publication-venue {
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .publication-authors {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Contact */
+        .contact-block {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 120px;
+            font-size: 0.95rem;
+        }
+
+        .contact-item a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .contact-item a:hover {
+            color: var(--text-primary);
+        }
+
+        .contact-item span:not(.contact-label) {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .research-grid,
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.8rem;
+            }
+
+            .education-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+                padding-bottom: 2rem;
+            }
+
+            .education-year {
+                font-size: 0.9rem;
+            }
+
+            section {
+                padding: 3rem 5%;
+            }
+
+            .hero {
+                min-height: 70vh;
+            }
+
+            .contact-info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+
+            .contact-label {
+                min-width: auto;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">&lt;XH /&gt;</div>
+        <nav>
+            <a href="#education">Education</a>
+            <a href="#research">Research</a>
+            <a href="#skills">Skills</a>
+            <a href="#publications">Publications</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-tag">AI/ML Researcher & Engineer</span>
+            <h1>Xiao Hu</h1>
+            <p class="hero-subtitle">
+                Building the future of AI-driven drug discovery through large language models, 
+                graph neural networks, and generative AI. Actively seeking opportunities in AI/ML Engineering, 
+                Data Science, and AI for Science
+            </p>
+            <div class="cta-buttons">
+                <a href="mailto:hu.2823@osu.edu" class="btn btn-primary">
+                    Get in Touch →
+                </a>
+                <a href="#publications" class="btn btn-secondary">
+                    View Publications
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <h2 class="section-title">Education</h2>
+        <div class="education-timeline">
+            <div class="education-item fade-in-up stagger-1">
+                <div class="education-year">2023 - 2025</div>
+                <div class="education-content">
+                    <h3>Master of Science in Computer Science and Engineering</h3>
+                    <div class="education-school">The Ohio State University</div>
+                    <div class="education-location">Columbus, OH</div>
+                    <p class="education-detail">Focus: AI/ML, GenAI, Large Language Models, Drug Discovery</p>
+                </div>
+            </div>
+
+            <div class="education-item fade-in-up stagger-2">
+                <div class="education-year">2021 - 2023</div>
+                <div class="education-content">
+                    <h3>Master of Science in Electrical Engineering and Computer Science</h3>
+                    <div class="education-school">University of Michigan</div>
+                    <div class="education-location">Ann Arbor, MI</div>
+                    <p class="education-detail">Focus: Deep Learning, Signal Processing, Image Processing</p>
+                </div>
+            </div>
+
+            <div class="education-item fade-in-up stagger-3">
+                <div class="education-year">2017 - 2021</div>
+                <div class="education-content">
+                    <h3>Bachelor of Engineering in Automation</h3>
+                    <div class="education-school">Huazhong University of Science and Technology (HUST)</div>
+                    <div class="education-location">Wuhan, China</div>
+                    <p class="education-detail">Foundation in control systems, data science, and machine learning</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research">
+        <h2 class="section-title">Featured Research</h2>
+        <div class="research-grid">
+            <div class="research-card fade-in-up stagger-1">
+                <span class="research-tag">LLM · Drug Discovery</span>
+                <h3>GeLLMO: Generalizing LLMs for Molecule Optimization</h3>
+                <p class="research-date">Oct 2024 – July 2025</p>
+                <p>
+                    Developed GeLLMO and GeLLMO-C models with MuMOInstruct (255k+ molecule pairs, 63 tasks) 
+                    and C-MuMOInstruct (28k+ tasks, up to 10 properties) datasets for multi-property and 
+                    controllable molecular optimization. Achieved 186.6% improvement over baselines with 
+                    strong zero-shot performance, addressing realistic drug optimization scenarios.
+                </p>
+                <a href="https://huggingface.co/collections/NingLab/gellmo" class="research-link">Learn more →</a>
+            </div>
+
+            <div class="research-card fade-in-up stagger-2">
+                <span class="research-tag">Chemical Informatics · GNN</span>
+                <h3>log-RRIM: Reaction Yield Prediction</h3>
+                <p class="research-date">Sept 2023 – Dec 2024</p>
+                <p>
+                    Designed graph-transformer framework with cross-attention mechanisms for chemical 
+                    reaction yield prediction. Outperformed SOTA methods with significantly better accuracy 
+                    in medium-to-high yield reactions and higher sensitivity to small molecular modifications.
+                </p>
+                <a href="https://arxiv.org/abs/2411.03320" class="research-link">Learn more →</a>
+            </div>
+
+            <div class="research-card fade-in-up stagger-3">
+                <span class="research-tag">Deep Learning · Communications</span>
+                <h3>Deep JSCC with Iterative Source Error Correction</h3>
+                <p class="research-date">May 2022 – Sept 2022</p>
+                <p>
+                    Proposed Iterative Source Error Correction (ISEC) decoding algorithm for approximate MAP 
+                    decoding of high-resolution images. Demonstrated superior performance over one-shot Deep 
+                    JSCC decoders across various metrics, especially when test SNR differs from training SNR.
+                </p>
+                <a href="https://github.com/changwoolee/isec-deep-jscc" class="research-link">Learn more →</a>
+            </div>
+
+            <div class="research-card fade-in-up stagger-1">
+                <span class="research-tag">Data Science · Social Analysis</span>
+                <h3>Fertility Pattern Mapping in Ideological Diversity</h3>
+                <p class="research-date">Nov 2019 – June 2021</p>
+                <p>
+                    Conducted comprehensive data analysis using World Values Survey and demographic datasets. 
+                    Applied Genetic Algorithm feature selection and trained XGBoost models to map correlations 
+                    between cultural indicators and fertility trends. Used SHAP values for interpretability.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="section-title">Technical Expertise</h2>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3>Programming & Tools</h3>
+                <div>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">PyTorch</span>
+                    <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">Hugging Face</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">C</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">Shell Scripting</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3>AI/ML Domains</h3>
+                <div>
+                    <span class="skill-tag">Large Language Models</span>
+                    <span class="skill-tag">Graph Neural Networks</span>
+                    <span class="skill-tag">Generative Models</span>
+                    <span class="skill-tag">Deep Learning</span>
+                    <span class="skill-tag">NLP</span>
+                    <span class="skill-tag">Transformer Architectures</span>
+                    <span class="skill-tag">Molecular Optimization</span>
+                    <span class="skill-tag">RDKit</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications">
+        <h2 class="section-title">Publications</h2>
+        
+        <div class="publication">
+            <div class="publication-title">log-RRIM: Yield Prediction via Local-to-global Reaction Representation Learning and Interaction Modeling</div>
+            <div class="publication-venue">Journal of Chemical Information and Modeling, 2025</div>
+            <div class="publication-authors">Xiao Hu, et al.</div>
+        </div>
+
+        <div class="publication">
+            <div class="publication-title">GeLLM³O: Generalizing Large Language Models for Multi-property Molecule Optimization</div>
+            <div class="publication-venue">Association for Computational Linguistics, 2025</div>
+            <div class="publication-authors">Vishal Dey*, Xiao Hu*, Xia Ning</div>
+        </div>
+
+        <div class="publication">
+            <div class="publication-title">Large Language Models for Controllable Multi-property Multi-objective Molecule Optimization</div>
+            <div class="publication-venue">Empirical Methods in Natural Language Processing, 2025</div>
+            <div class="publication-authors">Vishal Dey, Xiao Hu, Xia Ning</div>
+        </div>
+
+        <div class="publication">
+            <div class="publication-title">Deep Joint Source-Channel Coding with Iterative Source Error Correction</div>
+            <div class="publication-venue">International Conference on Artificial Intelligence and Statistics (AISTATS), 2023</div>
+            <div class="publication-authors">Changwoo Lee, Xiao Hu, Hun-Seok Kim</div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-block">
+            <div class="contact-info-grid">
+                <div class="contact-item">
+                    <span class="contact-label">📧 Email:</span>
+                    <a href="mailto:hu.2823@osu.edu">hu.2823@osu.edu</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">💬 WeChat:</span>
+                    <span>AaaX7-14</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">💼 LinkedIn:</span>
+                    <a href="https://www.linkedin.com/in/xiao-hu-86a355243/">https://www.linkedin.com/in/xiao-hu-86a355243/</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Xiao Hu. Built with passion for AI and drug discovery.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Actively seeking opportunities in AI/ML Engineering, Data Science, and AI for Drug Discovery</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.research-card, .skill-category, .publication').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
